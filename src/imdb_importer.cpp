@@ -10,16 +10,23 @@ bool IMDB_Importer::Import(const std::string directory) {
 	// import
 	std::cout << "Importing IMDB database..." << std::endl;
 	begin = clock();
+
+	// prepare the graphs
 	m = ImportMovies(directory);
+	movie_to_actor_.SetSize(movies_.size());
+	movie_to_genre_.SetSize(movies_.size());
+	movie_to_tag_.SetSize(movies_.size());
+
+	// load the graphs
 	concurrency::parallel_invoke(
 		[&] () { a = ImportActors(directory); },
 		[&] () { g = ImportGenres(directory); },
 		[&] () { t = ImportTags(directory);   }
 	);
+
 	end = clock();
 	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 	std::cout << "... finished after " << time_spent << "s!" << std::endl;
-
 	log_file_.clear();
 	log_file_.close();
 
@@ -116,11 +123,12 @@ bool IMDB_Importer::ImportActors(const std::string directory) {
 				delete [] syear;
 			} else year = 0;
 
-			// add the movie to our set
-			auto itr = movies_.find(Movie(title, year));
-			if (itr != movies_.end()) {
-				itr->AddActor(actor);
-			} else {
+
+			// add the actor and relation if it hasn't been already
+			if (movie_to_actor_.Insert(actor, actors_.size())) {
+				actors_.push_back(actor);
+			}
+			if (!movie_to_actor_.AddEdge(Movie(title, year), actor)) {
 				log_file_ << "Actors: missing movie '" << Movie(title, year).GetTitle() << "'" << std::endl;
 			}
 
@@ -198,11 +206,11 @@ bool IMDB_Importer::ImportGenres(const std::string directory) {
 		genre[genre_length] = '\0';
 		memcpy(genre, line + (rc == 4 ? ovector[6] : ovector[4]), genre_length);
 
-		// add the movie to our set
-		auto itr = movies_.find(Movie(title, year));
-		if (itr != movies_.end()) {
-			itr->AddGenre(genre);
-		} else {
+		// add the genre and relation if it hasn't been already
+		if (movie_to_genre_.Insert(genre, genres_.size())) {
+			genres_.push_back(genre);
+		}
+		if (!movie_to_genre_.AddEdge(Movie(title, year), genre)) {
 			log_file_ << "Genres: missing movie '" << Movie(title, year).GetTitle() << "'" << std::endl;
 		}
 
@@ -221,7 +229,7 @@ bool IMDB_Importer::ImportMovies(const std::string directory) {
 	const char* error;
 	int         rc, erroffset, progress = 0, ovector[15];
 	std::string file_name = directory + "movies.list";
-
+	
 	// memory map the file
 	HANDLE  hFile         = CreateFile(file_name.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	HANDLE  hMMFile       = CreateFileMapping(hFile, 0, PAGE_READONLY, 0, 0, "imdb_movies");
@@ -274,7 +282,13 @@ bool IMDB_Importer::ImportMovies(const std::string directory) {
 		} else year = 0;
 
 		// add the movie to our set
-		movies_.insert(movies_.end(), Movie(title, year));
+		Movie m(title, year);
+		size_t pos = movies_.size();
+		if (movie_to_actor_.Insert(m, pos)) {
+			movie_to_genre_.Insert(m, pos);
+			movie_to_tag_.Insert(m, pos);
+			movies_.push_back(m);
+		}
 
 		delete [] title;
 		delete [] line;
@@ -349,11 +363,11 @@ bool IMDB_Importer::ImportTags(const std::string directory) {
 		tag[tag_length]   = '\0';
 		memcpy(tag, line + (rc == 4 ? ovector[6] : ovector[4]), tag_length);
 
-		// add the movie to our set
-		auto itr = movies_.find(Movie(title, year));
-		if (itr != movies_.end()) {
-			itr->AddTag(tag);
-		} else {
+		// add the tag and relation if it hasn't been already
+		if (movie_to_tag_.Insert(tag, tags_.size())) {
+			tags_.push_back(tag);
+		}
+		if (!movie_to_tag_.AddEdge(Movie(title, year), tag)) {
 			log_file_ << "Tags: missing movie '" << Movie(title, year).GetTitle() << "'" << std::endl;
 		}
 
@@ -366,4 +380,4 @@ bool IMDB_Importer::ImportTags(const std::string directory) {
 	return true;
 }
 
-const std::set<Movie>& IMDB_Importer::GetMovies() const { return movies_; };
+const std::vector<Movie>& IMDB_Importer::GetMovies() const { return movies_; };

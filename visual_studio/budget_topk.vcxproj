@@ -16,6 +16,7 @@
     <ClCompile Include="..\src\movie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\graph.h" />
     <ClInclude Include="..\src\imdb_importer.h" />
     <ClInclude Include="..\src\movie.h" />
     <ClInclude Include="..\src\pcre.h" />
