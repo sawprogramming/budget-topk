@@ -30,7 +30,7 @@ To run this program, simply load up the Visual Studio solution file, build, and 
 * 8GB RAM
 
 ### Version
-0.1.0
+0.2.0
 
 ### License
 GPL2
