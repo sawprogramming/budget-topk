@@ -1,15 +1,19 @@
 #include <iostream>
-#include <fstream>
-#include <vector>
 #include "imdb_importer.h"
-#include "pcre.h"
+#include "imdb_scorer.h"
 
 using namespace std;
 
 int main() {
-	IMDB_Importer importer;
-	importer.Import("../data/");
-	//importer.GetMovies();
+	IMDB::dataset  data;
+	IMDB::Importer importer;
+	IMDB::Scorer   scorer(data);
+	topk::scoreset by_tags, by_genres, by_titles, by_actors;
+
+	// import the data
+	importer.Import(data);
+
+	// add queries manually here
 
 	system("pause");
 	return 0;

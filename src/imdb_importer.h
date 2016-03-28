@@ -12,30 +12,25 @@
 #include "graph.h"
 #include "movie.h"
 #include "pcre.h"
+#include "imdb_dataset.h"
 
-class IMDB_Importer {
+namespace IMDB {
+
+class Importer {
 public:
-	bool Import(const std::string directory = "");
-
-	const std::vector<Movie>& GetMovies() const;
+	bool Import(dataset& s);
 
 private:
-	bool ImportActors     (const std::string directory);
-	bool ImportGenres     (const std::string directory);
-	bool ImportMovies     (const std::string directory);
-	bool ImportTags       (const std::string directory);
+	bool ImportActors ();
+	bool ImportGenres ();
+	bool ImportMovies ();
+	bool ImportTags   ();
 
 	//std::set<Movie> movies_;
 	std::ofstream   log_file_;
-
-	std::vector<Movie>       movies_;
-	std::vector<std::string> actors_;
-	std::vector<std::string> genres_;
-	std::vector<std::string> tags_;
-
-	graph<Movie, std::string> movie_to_actor_;
-	graph<Movie, std::string> movie_to_genre_;
-	graph<Movie, std::string>   movie_to_tag_;
+	dataset*        data_;
 };
+
+} // IMDB namespace
 
 #endif

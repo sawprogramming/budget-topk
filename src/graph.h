@@ -6,6 +6,7 @@
 #include <algorithm>
 
 typedef size_t vertex;
+typedef std::vector<std::vector<vertex>> adjacency_list;
 
 template <class F, class S>
 class graph {
@@ -18,12 +19,12 @@ public:
 	bool Insert  (const F& value, const vertex& pos);
 	bool Insert  (const S& value, const vertex& pos);
 
-	const std::vector<std::vector<vertex>>& GetAdjacencyList() const;
+	const adjacency_list& GetAdjacencyList() const;
 
 private:
-	std::map<F, vertex>              f_vertices_;
-	std::map<S, vertex>              s_vertices_;
-	std::vector<std::vector<vertex>> adjacency_list_;
+	std::map<F, vertex> f_vertices_;
+	std::map<S, vertex> s_vertices_;
+	adjacency_list      adjacency_list_;
 };
 
 template <class F, class S>
@@ -63,7 +64,13 @@ bool graph<F, S>::AddEdge(const F& from, const S& to) {
 	if (HasVertex(from) && HasVertex(to)) {
 		f = f_vertices_.at(from);
 		t = s_vertices_.at(to);
+		
+		// add the edge if it hasn't been already
+		for (int i = 0; i < adjacency_list_[f].size(); ++i) {
+			if (adjacency_list_[f][i] == t) return true;
+		}
 		adjacency_list_[f].push_back(t);
+
 		return true;
 	}
 
@@ -76,7 +83,7 @@ void graph<F, S>::SetSize(const size_t& size) {
 }
 
 template <class F, class S>
-const std::vector<std::vector<vertex>>& graph<F, S>::GetAdjacencyList() const {
+const adjacency_list& graph<F, S>::GetAdjacencyList() const {
 	return adjacency_list_;
 }
 

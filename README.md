@@ -27,10 +27,11 @@ To run this program, simply load up the Visual Studio solution file, build, and 
     * This program uses Windows exclusive libraries for memory mapping files and for parallel execution of functions.
     * The program uses over 2GB of RAM, thus 64-bit is required for it to work correctly.
 * Visual Studio (created using Visual Studio Premium 2013)
-* 8GB RAM
+* Multi-core processor
+* 4GB RAM
 
 ### Version
-0.2.0
+0.3.0
 
 ### License
 GPL2
