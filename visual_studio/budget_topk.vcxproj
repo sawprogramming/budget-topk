@@ -16,16 +16,21 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\movie.cpp" />
     <ClCompile Include="..\src\string_util.cpp" />
+    <ClCompile Include="..\src\topk_nra.cpp" />
+    <ClCompile Include="..\src\topk_score_range.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graph.h" />
     <ClInclude Include="..\src\imdb_dataset.h" />
     <ClInclude Include="..\src\imdb_importer.h" />
     <ClInclude Include="..\src\imdb_scorer.h" />
+    <ClInclude Include="..\src\indexed_vector.h" />
     <ClInclude Include="..\src\movie.h" />
+    <ClInclude Include="..\src\topk_nra.h" />
     <ClInclude Include="..\src\pcre.h" />
     <ClInclude Include="..\src\string_util.h" />
     <ClInclude Include="..\src\topk_scoreset.h" />
+    <ClInclude Include="..\src\topk_score_range.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{10D4337A-3B94-43BD-BCA9-C039DB2D2AE4}</ProjectGuid>

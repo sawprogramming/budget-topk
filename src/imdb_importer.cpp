@@ -11,7 +11,7 @@ bool Importer::Import(dataset& data) {
 	log_file_.open("../logs/imdb_error.log");
 
 	// import
-	std::cout << "Importing IMDB database..." << std::endl;
+	std::cout << "Importing IMDB database... " << std::flush;
 	begin = clock();
 
 	// prepare the graphs
@@ -29,7 +29,7 @@ bool Importer::Import(dataset& data) {
 
 	end = clock();
 	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	std::cout << "... finished after " << time_spent << "s!" << std::endl;
+	std::cout << "finished after " << time_spent << "s!" << std::endl;
 	log_file_.clear();
 	log_file_.close();
 
@@ -63,6 +63,7 @@ bool Importer::ImportActors() {
 			if (file_contents[lineEnd] == '\n') break;
 		}
 		if (file_contents[lineStart] == '\n') continue;
+
 		// allocate enough memory then copy the line
 		line_length       = lineEnd - lineStart;
 		char* line        = new char[line_length + 1];

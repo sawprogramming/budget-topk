@@ -27,6 +27,7 @@ private:
 	adjacency_list      adjacency_list_;
 };
 
+// ********************************************************************************************************************
 template <class F, class S>
 bool graph<F, S>::Insert(const F& value, const vertex& pos) {
 	if (!HasVertex(value)) {

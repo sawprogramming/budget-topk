@@ -22,7 +22,7 @@ void Scorer::ScoreTitles(std::string query, topk::scoreset& scores) const {
 			if (score < 0 || score > 1) score = 0;
 		}
 
-		scores.insert(topk::score(i, score));
+		scores.push_back(topk::score(i, score));
 	}
 }
 
@@ -50,7 +50,7 @@ void Scorer::ScoreGenres(std::string query, topk::scoreset& scores) const {
 			}
 		}
 
-		scores.insert(topk::score(i, score));
+		scores.push_back(topk::score(i, score));
 	}
 }
 
@@ -78,7 +78,7 @@ void Scorer::ScoreActors(std::string query, topk::scoreset& scores) const {
 			}
 		}
 
-		scores.insert(topk::score(i, score));
+		scores.push_back(topk::score(i, score));
 	}
 }
 
@@ -106,7 +106,7 @@ void Scorer::ScoreTags(std::string query, topk::scoreset& scores) const {
 			}
 		}
 
-		scores.insert(topk::score(i, score));
+		scores.push_back(topk::score(i, score));
 	}
 }
 
