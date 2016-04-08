@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\budget_fair.cpp" />
     <ClCompile Include="..\src\imdb_importer.cpp" />
     <ClCompile Include="..\src\imdb_scorer.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -20,6 +21,8 @@
     <ClCompile Include="..\src\topk_score_range.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\budget_fair.h" />
+    <ClInclude Include="..\src\budget_util.h" />
     <ClInclude Include="..\src\graph.h" />
     <ClInclude Include="..\src\imdb_dataset.h" />
     <ClInclude Include="..\src\imdb_importer.h" />

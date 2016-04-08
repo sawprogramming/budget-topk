@@ -2,6 +2,7 @@
 #include "imdb_importer.h"
 #include "imdb_scorer.h"
 #include "topk_nra.h"
+#include "budget_fair.h"
 #include <iomanip>
 using namespace std;
 
@@ -25,8 +26,16 @@ int main() {
 	scorer.ScoreActors("Butler, Gerard", by_actors);
 	scorer.ScoreGenres("Action,Fantasy,War", by_genres); 
 	scorer.ScoreTags("spartan,greek,historical-fiction", by_tags);      
+	cout << "\nNRA:\n";
 	topk::scoreset top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors });
 	for (auto movie : top) {
+		cout << "\t" << data.movies[movie.first] << endl;
+	}
+	cout << endl;
+
+	cout << "\nFair(500):\n";
+	topk::scoreset topb = budget::Fair::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+	for (auto movie : topb) {
 		cout << "\t" << data.movies[movie.first] << endl;
 	}
 	cout << endl;
@@ -72,14 +81,50 @@ void GetUserInput(const IMDB::dataset& data, const IMDB::Scorer& scorer) {
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		cout << "finished after " << time_spent << "s!" << endl;
 
-		// calculate top-k
-		cout << " calculating top-" << K << "... " << flush;
+		// calculate top-k using NRA
+		cout << " NRA: calculating top-" << K << "... " << flush;
 		begin = clock();
 		topk::scoreset top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors });
 		end = clock();
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		cout << "finished after " << time_spent << "s!" << endl;
 		for (auto movie : top) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using Fair(500);
+		cout << " Fair(500): calculating top-" << K << "... " << flush;
+		begin = clock();
+		topk::scoreset topf = budget::Fair::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : topf) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using Fair(1000);
+		cout << " Fair(1000): calculating top-" << K << "... " << flush;
+		begin = clock();
+		topf  = budget::Fair::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 1000);
+		end   = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : topf) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using Fair(2000);
+		cout << " Fair(2000): calculating top-" << K << "... " << flush;
+		begin = clock();
+		topf  = budget::Fair::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 2000);
+		end   = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : topf) {
 			cout << "\t" << data.movies[movie.first] << endl;
 		}
 		cout << endl;

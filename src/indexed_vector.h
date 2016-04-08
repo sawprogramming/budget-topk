@@ -95,7 +95,7 @@ typename std::vector<std::pair<Key, Value>>::iterator indexed_vector<Key, Value>
 
 template <typename Key, typename Value>
 typename std::vector<std::pair<Key, Value>>::const_iterator indexed_vector<Key, Value>::begin() const {
-	if (dirty_ && sort) GenerateIndexes();
+	if (dirty_) GenerateIndexes();
 	return values_.begin();
 }
 
