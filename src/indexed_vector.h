@@ -27,7 +27,7 @@ public:
 
 	typename std::vector<std::pair<Key, Value>>::iterator begin (const bool& sort = true);
 	typename std::vector<std::pair<Key, Value>>::iterator end   ();
-	typename std::vector<std::pair<Key, Value>>::const_iterator begin() const;
+	typename std::vector<std::pair<Key, Value>>::const_iterator begin () const;
 	typename std::vector<std::pair<Key, Value>>::const_iterator end   () const;
 
 	Value operator[](const Key& i) const;

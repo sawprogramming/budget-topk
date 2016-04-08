@@ -3,7 +3,7 @@
 namespace budget {
 
 topk::scoreset Fair::TopK(const size_t& K, std::initializer_list<topk::scoreset*> sets, const size_t& budget) {
-	size_t                i = 0, k = 0, spent = 0;
+	size_t                i = 0, k = 0;
 	topk::scoreset        results;
 	topk::score_range_set topk;
 	std::vector<double>   estimated_utilities;
@@ -40,10 +40,12 @@ topk::scoreset Fair::TopK(const size_t& K, std::initializer_list<topk::scoreset*
 			}
 
 			(itrs[i])++;
-			++spent;
 		}
 	}
 	delete[] itrs;
+
+	// sort the results!
+	topk.at(0);
 
 	// return the top-k
 	for (auto scorerange : topk) {

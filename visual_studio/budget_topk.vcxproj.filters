@@ -39,6 +39,9 @@
     <ClCompile Include="..\src\budget_fair.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\budget_ranking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\imdb_importer.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\budget_fair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\budget_ranking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

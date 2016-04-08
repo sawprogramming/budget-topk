@@ -3,6 +3,7 @@
 #include "imdb_scorer.h"
 #include "topk_nra.h"
 #include "budget_fair.h"
+#include "budget_ranking.h"
 #include <iomanip>
 using namespace std;
 
@@ -19,10 +20,10 @@ int main() {
 	importer.Import(data);
 
 	// get query from user
-	//GetUserInput(data, scorer);
+	GetUserInput(data, scorer);
 
 	// test case query
-	scorer.ScoreTitles("300",      by_titles);
+	/*scorer.ScoreTitles("300",      by_titles);
 	scorer.ScoreActors("Butler, Gerard", by_actors);
 	scorer.ScoreGenres("Action,Fantasy,War", by_genres); 
 	scorer.ScoreTags("spartan,greek,historical-fiction", by_tags);      
@@ -39,6 +40,13 @@ int main() {
 		cout << "\t" << data.movies[movie.first] << endl;
 	}
 	cout << endl;
+
+	cout << "\nRanking(500):\n";
+	topk::scoreset topr = budget::Ranking::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+	for (auto movie : topr) {
+		cout << "\t" << data.movies[movie.first] << endl;
+	}
+	cout << endl;*/
 
 	system("pause");
 	return 0;
@@ -125,6 +133,42 @@ void GetUserInput(const IMDB::dataset& data, const IMDB::Scorer& scorer) {
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		cout << "finished after " << time_spent << "s!" << endl;
 		for (auto movie : topf) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using Ranking(500);
+		cout << " Ranking(500): calculating top-" << K << "... " << flush;
+		begin = clock();
+		topk::scoreset topr = budget::Ranking::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : topr) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using Ranking(1000);
+		cout << " Ranking(1000): calculating top-" << K << "... " << flush;
+		begin = clock();
+		topr = budget::Ranking::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 1000);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : topr) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using Ranking(2000);
+		cout << " Ranking(2000): calculating top-" << K << "... " << flush;
+		begin = clock();
+		topr = budget::Ranking::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 2000);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : topr) {
 			cout << "\t" << data.movies[movie.first] << endl;
 		}
 		cout << endl;

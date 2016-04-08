@@ -9,7 +9,7 @@ score_range::score_range(const size_t& num_lists) : worst_score_(0), best_score_
 score_range::score_range(const score_range& ref) : score_range(ref.num_lists_) {
 	worst_score_ = ref.worst_score_;
 	best_score_  = ref.best_score_;
-	std::copy(ref.discovered_fields_, ref.discovered_fields_ + 4, discovered_fields_);
+	std::copy(ref.discovered_fields_, ref.discovered_fields_ + ref.num_lists_, discovered_fields_);
 }
 
 score_range::score_range(score_range&& other) : score_range(other.num_lists_) {
