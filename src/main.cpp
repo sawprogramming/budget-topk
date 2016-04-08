@@ -101,6 +101,42 @@ void GetUserInput(const IMDB::dataset& data, const IMDB::Scorer& scorer) {
 		}
 		cout << endl;
 
+		// calculate top-k using NRA(500);
+		cout << " NRA(500): calculating top-" << K << "... " << flush;
+		begin = clock();
+		top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : top) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using NRA(1000);
+		cout << " NRA(1000): calculating top-" << K << "... " << flush;
+		begin = clock();
+		top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 1000);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : top) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
+		// calculate top-k using NRA(2000);
+		cout << " NRA(2000): calculating top-" << K << "... " << flush;
+		begin = clock();
+		top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 2000);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		cout << "finished after " << time_spent << "s!" << endl;
+		for (auto movie : top) {
+			cout << "\t" << data.movies[movie.first] << endl;
+		}
+		cout << endl;
+
 		// calculate top-k using Fair(500);
 		cout << " Fair(500): calculating top-" << K << "... " << flush;
 		begin = clock();

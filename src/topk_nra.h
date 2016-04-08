@@ -10,6 +10,7 @@ namespace topk {
 class NRA {
 public:
 	static scoreset TopK(const size_t& k, std::initializer_list<scoreset*> sets);
+	static scoreset TopK(const size_t& K, std::initializer_list<scoreset*> sets, const size_t& budget);
 };
 
 } // topk namespace
