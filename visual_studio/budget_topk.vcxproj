@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\budget_fair.cpp" />
     <ClCompile Include="..\src\budget_ranking.cpp" />
+    <ClCompile Include="..\src\histogram.cpp" />
     <ClCompile Include="..\src\imdb_importer.cpp" />
     <ClCompile Include="..\src\imdb_scorer.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -26,6 +27,7 @@
     <ClInclude Include="..\src\budget_ranking.h" />
     <ClInclude Include="..\src\budget_util.h" />
     <ClInclude Include="..\src\graph.h" />
+    <ClInclude Include="..\src\histogram.h" />
     <ClInclude Include="..\src\imdb_dataset.h" />
     <ClInclude Include="..\src\imdb_importer.h" />
     <ClInclude Include="..\src\imdb_scorer.h" />

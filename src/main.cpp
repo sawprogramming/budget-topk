@@ -1,10 +1,9 @@
-#include <iostream>
 #include "imdb_importer.h"
 #include "imdb_scorer.h"
 #include "topk_nra.h"
 #include "budget_fair.h"
 #include "budget_ranking.h"
-#include <iomanip>
+#include "histogram.h"
 using namespace std;
 
 void GetUserInput(const IMDB::dataset& data, const IMDB::Scorer& scorer);
@@ -22,31 +21,32 @@ int main() {
 	// get query from user
 	GetUserInput(data, scorer);
 
-	// test case query
-	/*scorer.ScoreTitles("300",      by_titles);
-	scorer.ScoreActors("Butler, Gerard", by_actors);
-	scorer.ScoreGenres("Action,Fantasy,War", by_genres); 
-	scorer.ScoreTags("spartan,greek,historical-fiction", by_tags);      
-	cout << "\nNRA:\n";
-	topk::scoreset top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors });
-	for (auto movie : top) {
-		cout << "\t" << data.movies[movie.first] << endl;
-	}
-	cout << endl;
+	//// test case query
+	//scorer.ScoreTitles("300",      by_titles);
+	//scorer.ScoreActors("Butler, Gerard", by_actors);
+	//scorer.ScoreGenres("Action,Fantasy,War", by_genres); 
+	//scorer.ScoreTags("spartan,greek,historical-fiction", by_tags);  
+	
+	//cout << "\nNRA:\n";
+	//topk::scoreset top = topk::NRA::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors });
+	//for (auto movie : top) {
+	//	cout << "\t" << data.movies[movie.first] << endl;
+	//}
+	//cout << endl;
 
-	cout << "\nFair(500):\n";
-	topk::scoreset topb = budget::Fair::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
-	for (auto movie : topb) {
-		cout << "\t" << data.movies[movie.first] << endl;
-	}
-	cout << endl;
+	//cout << "\nFair(500):\n";
+	//topk::scoreset topb = budget::Fair::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+	//for (auto movie : topb) {
+	//	cout << "\t" << data.movies[movie.first] << endl;
+	//}
+	//cout << endl;
 
-	cout << "\nRanking(500):\n";
-	topk::scoreset topr = budget::Ranking::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
-	for (auto movie : topr) {
-		cout << "\t" << data.movies[movie.first] << endl;
-	}
-	cout << endl;*/
+	//cout << "\nRanking(500):\n";
+	//topk::scoreset topr = budget::Ranking::TopK(K, { &by_tags, &by_genres, &by_titles, &by_actors }, 500);
+	//for (auto movie : topr) {
+	//	cout << "\t" << data.movies[movie.first] << endl;
+	//}
+	//cout << endl;
 
 	system("pause");
 	return 0;

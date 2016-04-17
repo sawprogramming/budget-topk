@@ -3,7 +3,7 @@
 namespace topk {
 
 score_range::score_range(const size_t& num_lists) : worst_score_(0), best_score_(0), num_lists_(num_lists) {
-	discovered_fields_ = new double[num_lists_]{0};
+	discovered_fields_ = new double[num_lists_]{-1};
 }
 
 score_range::score_range(const score_range& ref) : score_range(ref.num_lists_) {
@@ -54,7 +54,8 @@ void score_range::UpdateRange(const size_t& index, const double& value) {
 	}
 }
 
-double score_range::best_score  () const { return  best_score_; }
-double score_range::worst_score () const { return worst_score_; }
+double score_range::best_score  ()                   const { return  best_score_; }
+double score_range::worst_score ()                   const { return worst_score_; }
+bool   score_range::HasBeenSeen (const size_t& list) const { return discovered_fields_[list] > 0; }
 
 } // topk namespace

@@ -16,19 +16,23 @@ template <typename Key, typename Value>
 // ****************************************************************************
 class indexed_vector {
 public:
+	typedef typename std::vector<std::pair<Key, Value>>::iterator iterator;
+	typedef typename std::vector<std::pair<Key, Value>>::const_iterator const_iterator;
+
+public:
 	indexed_vector();
 
 	void push_back(std::pair<Key, Value> row);
 
-	void   clear  ();
-	bool   HasKey (const Key& key) const;
-	size_t size   ()               const;
-	const Value& at(const size_t& pos) const;
+	void   clear    ();
+	bool   HasKey   (const Key& key)    const;
+	size_t size     ()                  const;
+	const Value& at (const size_t& pos) const;
 
-	typename std::vector<std::pair<Key, Value>>::iterator begin (const bool& sort = true);
-	typename std::vector<std::pair<Key, Value>>::iterator end   ();
-	typename std::vector<std::pair<Key, Value>>::const_iterator begin () const;
-	typename std::vector<std::pair<Key, Value>>::const_iterator end   () const;
+	typename iterator       begin (const bool& sort = true);
+	typename iterator       end   ();
+	typename const_iterator begin () const;
+	typename const_iterator end   () const;
 
 	Value operator[](const Key& i) const;
 
@@ -82,25 +86,25 @@ template <typename Key, typename Value>
 // to do a on a large number of modifications to the vector that do not require
 // the vector to be sorted to function correctly.
 // ****************************************************************************
-typename std::vector<std::pair<Key, Value>>::iterator indexed_vector<Key, Value>::begin(const bool& sort) {
+typename indexed_vector<Key, Value>::iterator indexed_vector<Key, Value>::begin(const bool& sort) {
 	if (dirty_ && sort) GenerateIndexes();
 	dirty_ = true;
 	return values_.begin();
 }
 
 template <typename Key, typename Value>
-typename std::vector<std::pair<Key, Value>>::iterator indexed_vector<Key, Value>::end() {
+typename indexed_vector<Key, Value>::iterator indexed_vector<Key, Value>::end() {
 	return values_.end();
 }
 
 template <typename Key, typename Value>
-typename std::vector<std::pair<Key, Value>>::const_iterator indexed_vector<Key, Value>::begin() const {
+typename indexed_vector<Key, Value>::const_iterator indexed_vector<Key, Value>::begin() const {
 	if (dirty_) GenerateIndexes();
 	return values_.begin();
 }
 
 template <typename Key, typename Value>
-typename std::vector<std::pair<Key, Value>>::const_iterator indexed_vector<Key, Value>::end() const {
+typename indexed_vector<Key, Value>::const_iterator indexed_vector<Key, Value>::end() const {
 	return values_.end();
 }
 

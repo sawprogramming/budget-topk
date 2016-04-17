@@ -6,23 +6,23 @@
 
 namespace budget {
 
-static double AverageScore(const topk::scoreset& list, const size_t& num_accesses) {
-	double sum = 0;
+	static double AverageScore(const topk::scoreset& list, const size_t& num_accesses) {
+		double sum = 0;
 
-	for (auto score : list) {
-		sum += score.second;
+		for (auto score : list) {
+			sum += score.second;
+		}
+
+		return sum / num_accesses;
 	}
 
-	return sum / num_accesses;
-}
+	static double ScoreReduction(const topk::scoreset& list, const size_t& num_accesses) {
+		return list.at(0) - list.at(num_accesses - 1);
+	}
 
-static double ScoreReduction(const topk::scoreset& list, const size_t& num_accesses) {
-	return list.at(0) - list.at(num_accesses - 1);
-}
-
-static double ListUtil(const topk::scoreset& list, const size_t& num_accesses, const double& alpha) {
-	return alpha * AverageScore(list, num_accesses) + (1 - alpha) * ScoreReduction(list, num_accesses);
-}
+	static double ListUtil(const topk::scoreset& list, const size_t& num_accesses, const double& alpha) {
+		return alpha * AverageScore(list, num_accesses) + (1 - alpha) * ScoreReduction(list, num_accesses);
+	}
 
 } // budget namespace
 
