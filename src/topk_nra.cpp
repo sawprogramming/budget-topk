@@ -76,12 +76,12 @@ scoreset NRA::TopK(const size_t& K, std::initializer_list<scoreset*> sets, const
 				else                             temp->second.UpdateRange(list, rank.second);
 			}
 
-			if (++spent_budget == budget) break;
+			if (++spent_budget >= budget) break;
 			(itrs[list])++;
 		}
 
 		// stop if mink > best_score(c) or if the budget is spent
-		if (++spent_budget == budget) break;
+		if (++spent_budget >= budget) break;
 		if ((topk.size() > K) && (topk.at(K - 1).worst_score() > topk.at(K).best_score())) {
 			break;
 		}
